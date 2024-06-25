@@ -1,0 +1,50 @@
+.login {
+    text-align: center;
+    padding: 40px;
+    background-color: #f0f9ff;
+    border-radius: 10px;
+    width: max-content;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h2 {
+    font-size: 25px;
+}
+
+#LoginForm {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#email,
+#password {
+    border-bottom: 1px solid #082f49;
+    font-size: 18px;
+    width: 300px;
+    padding: 15px;
+
+    &:focus {
+        border-bottom: 2px solid #0284c7;
+    }
+}
+
+#login {
+    font-size: 20px;
+    color: #f0f9ff;
+    background-color: #0284c7;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: 0.6s;
+    font-weight: bold;
+    border-radius: 10px;
+
+    &:hover {
+        background-color: #7dd3fc;
+        color: #082f49;
+    }
+}
