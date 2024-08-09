@@ -5,18 +5,13 @@ const Login = () => {
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-20 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    {/* <img
-                        className="mx-auto h-10 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=sky&shade=600"
-                        alt="Your Company"
-                    /> */}
                     <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
                         Sign in to your account
                     </h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="/inventory" method="POST">
+                    <form className="space-y-6" action="/dashboard">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address

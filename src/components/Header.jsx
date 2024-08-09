@@ -88,7 +88,7 @@ const Header = () => {
                         </div>
                     </div>
 
-                    <DisclosurePanel className="md:hidden">
+                    <DisclosurePanel className="md:hidden transition duration-500">
                         <div className="border-t border-gray-700 pb-3 pt-4">
                             <div className="flex items-center px-5">
                                 <div className="flex-shrink-0">

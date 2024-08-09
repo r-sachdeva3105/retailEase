@@ -4,6 +4,10 @@ import Header from './components/Header';
 import Login from './pages/Login';
 import Inventory from './pages/Inventory';
 import Add from './pages/Add';
+import Dashboard from './pages/Dashboard';
+import Categories from './pages/Categories';
+import Products from './pages/Products';
+import Sales from './pages/Sales';
 
 function App() {
   return (
@@ -13,7 +17,11 @@ function App() {
         <Routes>
           <Route path='/'></Route>
           <Route path='login' element={<Login />}></Route>
+          <Route path='dashboard' element={<Dashboard />}></Route>
           <Route path='inventory' element={<Inventory />}></Route>
+          <Route path='categories' element={<Categories />}></Route>
+          <Route path='products' element={<Products />}></Route>
+          <Route path='sales' element={<Sales />}></Route>
           <Route path='add' element={<Add />}></Route>
         </Routes>
       </BrowserRouter>

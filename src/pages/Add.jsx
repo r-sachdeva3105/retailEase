@@ -1,8 +1,40 @@
 import React, { useState } from 'react'
 import { PhotoIcon, ViewfinderCircleIcon } from '@heroicons/react/24/solid'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import { useNavigate } from 'react-router-dom'
+
+const categories = [
+    { value: 'select', label: 'Select' },
+    { value: 'beverages', label: 'Beverages' },
+    { value: 'snacks', label: 'Snacks' },
+    { value: 'packaged-foods', label: 'Packaged Foods' },
+    { value: 'dairy', label: 'Dairy Products' },
+    { value: 'frozen-foods', label: 'Frozen Foods' },
+    { value: 'produce', label: 'Produce' },
+    { value: 'personal-care', label: 'Personal Care Items' },
+    { value: 'over-the-counter-medicine', label: 'Over-the-Counter Medicine' },
+    { value: 'household', label: 'Household Items' },
+    { value: 'automotive-supplies', label: 'Automotive Supplies' },
+    { value: 'tobacco-products', label: 'Tobacco Products' },
+    { value: 'lottery-tickets-gift-cards', label: 'Lottery Tickets and Gift Cards' },
+    { value: 'magazines-newspapers', label: 'Magazines and Newspapers' },
+    { value: 'batteries-electronics-accessories', label: 'Batteries and Electronics Accessories' },
+    { value: 'pet-supplies', label: 'Pet Supplies' },
+    { value: 'seasonal', label: 'Seasonal Items' },
+    { value: 'miscellaneous', label: 'Miscellaneous' }
+];
+
+const storage = [
+    { value: 'select', label: 'Select' },
+    { value: 'normal', label: 'Normal Storage' },
+    { value: 'cold', label: 'Cold Storage' },
+    { value: 'hot', label: 'Hot Storage' },
+    { value: 'hazardious', label: 'Hazardous Materials Storage' }
+];
 
 const Add = () => {
+
+    const navigate = useNavigate()
 
     const [skuValid, setSkuValid] = useState()
     const [nameValid, setNameValid] = useState()
@@ -33,7 +65,6 @@ const Add = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(e)
         if (skuValid && nameValid && descValid && imgValid && costValid && sellValid && catValid && storValid && quantValid && disValid) {
             const product = {
                 "productSKU": e.target.form[0].value ? e.target.form[0].value : "No SKU",
@@ -61,8 +92,7 @@ const Add = () => {
                 body: JSON.stringify(product)
             }
             fetch('http://localhost:8081/api-inventory/add-product', request)
-                .then(response => console.log(response))
-                .then(data => this.setState({ postId: data?.id }))
+                .then(res => navigate('/products'))
                 .catch(error => console.error('Error:', error))
         } else {
             setIsDialogOpen(true)
@@ -244,24 +274,7 @@ const Add = () => {
                                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-600 text-sm leading-6 cursor-pointer"
                                         onBlur={(e) => e.target.value === 'select' ? setCatValid(false) : setCatValid(true)}
                                     >
-                                        <option value="select">Select</option>
-                                        <option value="beverages">Beverages</option>
-                                        <option value="snacks">Snacks</option>
-                                        <option value="packaged-foods">Packaged Foods</option>
-                                        <option value="dairy">Dairy Products</option>
-                                        <option value="frozen-foods">Frozen Foods</option>
-                                        <option value="produce">Produce</option>
-                                        <option value="personal-care">Personal Care Items</option>
-                                        <option value="over-the-counter-medicine">Over-the-Counter Medicine</option>
-                                        <option value="household">Household Items</option>
-                                        <option value="automotive-supplies">Automotive Supplies</option>
-                                        <option value="tobacco-products">Tobacco Products</option>
-                                        <option value="lottery-tickets-gift-cards">Lottery Tickets and Gift Cards</option>
-                                        <option value="magazines-newspapers">Magazines and Newspapers</option>
-                                        <option value="batteries-electronics-accessories">Batteries and Electronics Accessories</option>
-                                        <option value="pet-supplies">Pet Supplies</option>
-                                        <option value="seasonal">Seasonal Items</option>
-                                        <option value="miscellaneous">Miscellaneous</option>
+                                        {categories.map(({ value, label }, index) => <option key={value} value={value} >{label}</option>)}
                                     </select>
                                 </div>
                                 {catValid === false && <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
@@ -280,11 +293,7 @@ const Add = () => {
                                         className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-600 text-sm leading-6 cursor-pointer"
                                         onBlur={(e) => e.target.value === 'select' ? setStorValid(false) : setStorValid(true)}
                                     >
-                                        <option value="select">Select</option>
-                                        <option value="normal">Normal Storage</option>
-                                        <option value="cold">Cold Storage</option>
-                                        <option value="hot">Hot Storage</option>
-                                        <option value="hazardous">Hazardous Materials Storage</option>
+                                        {storage.map(({ value, label }, index) => <option key={value} value={value} >{label}</option>)}
                                     </select>
                                 </div>
                                 {storValid === false && <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
@@ -369,7 +378,7 @@ const Add = () => {
                 </div>
 
                 <div className="mt-6 flex items-center justify-end gap-x-6">
-                    <button type="button" onClick={e => window.location.href = "/inventory"} className="text-sm font-semibold leading-6 text-gray-900">
+                    <button type="button" onClick={() => navigate('/products')} className="text-sm font-semibold leading-6 text-gray-900">
                         Cancel
                     </button>
                     <button
@@ -384,7 +393,7 @@ const Add = () => {
             <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} className="relative z-10 focus:outline-none">
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center p-4">
-                        <DialogPanel className="w-full max-w-md rounded-xl bg-gray-800 p-6 backdrop-blur-2xl transition duration-500 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+                        <DialogPanel transition className="w-full max-w-md rounded-xl bg-gray-800 p-6 backdrop-blur-2xl transition duration-500 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                             <DialogTitle as="h3" className="text-base/7 font-medium text-white">Invalid Product Data</DialogTitle>
                             <p className="mt-2 text-sm/6 text-white/50">
                                 Please fill all the product details as all the details are mandatory to add the product.
