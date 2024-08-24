@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Header from './components/Header';
 import Login from './pages/Login';
 import Inventory from './pages/Inventory';
@@ -13,7 +13,6 @@ function App() {
   return (
     <div className='App'>
       <Header />
-      <BrowserRouter>
         <Routes>
           <Route path='/'></Route>
           <Route path='login' element={<Login />}></Route>
@@ -24,7 +23,6 @@ function App() {
           <Route path='sales' element={<Sales />}></Route>
           <Route path='add' element={<Add />}></Route>
         </Routes>
-      </BrowserRouter>
     </div>
   );
 }

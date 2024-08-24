@@ -30,7 +30,6 @@ const ItemCard = (props) => {
     }
 
     const updateQuantity = async () => {
-        console.log(quantity)
         if (quantity >= 0) {
             setQuantValid(true)
             const request = {
@@ -47,7 +46,6 @@ const ItemCard = (props) => {
                     "quantity": quantity
                 })
             }
-            console.log(request)
             await fetch('http://localhost:8081/api-inventory/update-inventory', request)
                 .then(res => {
                     if (res?.ok) {
@@ -69,31 +67,42 @@ const ItemCard = (props) => {
 
     return (
         <>
-            <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 {props.inventory?.map((product) => (
-                    <div key={product.productSKU} className="group relative p-4 rounded-md shadow">
-                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none lg:w-64">
+                    <div key={product.productSKU} className="group relative p-4 rounded-md shadow overflow-hidden bg-white">
+                        <div className="w-full h-60 overflow-hidden rounded-md">
                             <img
                                 src={`data:image/png;base64,${product.product.productImage}`}
                                 alt={product.product.productName}
-                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                                className="h-full object-cover mx-auto"
                             />
                         </div>
                         <div className="mt-4">
-                            <div className="flex justify-between items-center">
-                                <h3 className="text-md font-bold text-gray-700">
-                                    <a href={product.href}>
+                            <div className="items-center">
+                                <h3 className="text-lg font-bold text-gray-700">
+                                    <a href={product.href} className="hover:text-gray-900">
                                         {product.product.productName}
                                     </a>
                                 </h3>
-                                <p className="text-sm font-semibold text-gray-900">${product.product.productSellingPrice}</p>
+                                <p className="text-md font-semibold text-gray-900">${product.product.productSellingPrice}</p>
                             </div>
-                            <div className="flex justify-between items-center">
-                                <p className="mt-1 text-sm font-semibold text-gray-500">Quantity: {product.quantity}</p>
-                                <button type="button" onClick={() => {
-                                    handleClick(product.productSKU, product.quantity, product.product.productName, product.warehouseID, product.product.isExpirable ? product.expiryDate : ''
-                                    )
-                                }} className="mt-1 py-1 px-2 bg-sky-600 cursor-pointer rounded-md"><PencilSquareIcon className="h-5 text-white" /></button>
+                            <div className="flex justify-between items-center mt-2">
+                                <p className="text-sm font-semibold text-gray-500">Quantity: {product.quantity}</p>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        handleClick(
+                                            product.productSKU,
+                                            product.quantity,
+                                            product.product.productName,
+                                            product.warehouseID,
+                                            product.product.isExpirable ? product.expiryDate : ''
+                                        );
+                                    }}
+                                    className="py-2 px-4 bg-sky-600 cursor-pointer rounded-md hover:bg-sky-700"
+                                >
+                                    <PencilSquareIcon className="h-5 text-white" />
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -105,7 +114,7 @@ const ItemCard = (props) => {
                         <DialogPanel transition className="w-full max-w-md rounded-xl bg-gray-800 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                             <Field>
                                 <form>
-                                    <Label className="text-md font-medium text-white">Quantity</Label>
+                                    <Label className="text-md font-medium text-white">Update Product</Label>
                                     <Description className="text-sm/6 text-white/50">Update quantity of product {name}</Description>
                                     <div className="flex items-center justify-center my-3">
                                         <button
@@ -134,7 +143,7 @@ const ItemCard = (props) => {
                                             </svg>
                                         </button>
                                     </div>
-                                    {quantValid === false && <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
+                                    {quantValid === false && <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1">
                                         Invalid quantity field !
                                     </span>}
                                     <div className="mt-4 flex justify-end gap-4">

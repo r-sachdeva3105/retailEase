@@ -77,6 +77,7 @@ const Add = () => {
                 "storageType": e.target.form[8].value ? e.target.form[8].value : "No Storage Type",
                 "productQuantity": e.target.form[9].value ? parseInt(e.target.form[9].value) : 1,
                 "discountID": e.target.form[10].value ? parseFloat(e.target.form[10].value) : 0,
+                "discountName": "",
                 "isExpirable": e.target.form[11].checked ? true : false,
                 "expiryDate": e.target.form[12].value ? e.target.form[12].value : "",
                 "warehouseName": "Main Warehouse",
@@ -92,7 +93,13 @@ const Add = () => {
                 body: JSON.stringify(product)
             }
             fetch('http://localhost:8081/api-inventory/add-product', request)
-                .then(res => navigate('/products'))
+                .then(res => {
+                    if (res.ok) {
+                        navigate('/products')
+                    } else {
+                        console.error('Failed to add product')
+                    }
+                })
                 .catch(error => console.error('Error:', error))
         } else {
             setIsDialogOpen(true)

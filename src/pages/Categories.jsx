@@ -1,8 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Dialog, DialogPanel, Description, Field, Input, Label } from '@headlessui/react'
 import clsx from 'clsx'
+import { Link } from 'react-router-dom'
 
 const Categories = () => {
+
+    const [categories, setCategories] = useState()
+    const [isRendered, setIsRendered] = useState(false)
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://localhost:8081/api-product-category')
+                const data = await response.json()
+                setCategories(data)
+                setIsRendered(true)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        fetchCategories()
+    }, [])
 
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [catValid, setCatValid] = useState()
@@ -34,6 +52,7 @@ const Categories = () => {
                     if (res?.ok) {
                         setCatValid(true)
                         setIsDialogOpen(false)
+                        window.location.reload()
                     } else {
                         e.value = ''
                         setCatValid(false)
@@ -48,6 +67,8 @@ const Categories = () => {
             setCatValid(false)
         }
     }
+
+    isRendered && console.log(categories)
 
     return (
         <div className="min-h-full">
@@ -69,7 +90,17 @@ const Categories = () => {
             {/* MAIN */}
 
             <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-
+                <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                    {isRendered && categories?.map((category) => (
+                        <div key={category.productCategoryId} className="group relative p-4 rounded-md shadow cursor-pointer hover:bg-gray-200">
+                            <Link to={'/inventory?category=' + category.productCategoryId}>
+                                <h3 className="text-md font-bold text-gray-700 text-center capitalize">
+                                    {category.productCategoryName}
+                                </h3>
+                            </Link>
+                        </div>
+                    ))}
+                </div>
             </main>
             <Dialog as="div" open={isDialogOpen} onClose={close} className="relative z-10 focus:outline-none">
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
