@@ -1,40 +1,34 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { PhotoIcon, ViewfinderCircleIcon } from '@heroicons/react/24/solid'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useNavigate } from 'react-router-dom'
 
-const categories = [
-    { value: 'select', label: 'Select' },
-    { value: 'beverages', label: 'Beverages' },
-    { value: 'snacks', label: 'Snacks' },
-    { value: 'packaged-foods', label: 'Packaged Foods' },
-    { value: 'dairy', label: 'Dairy Products' },
-    { value: 'frozen-foods', label: 'Frozen Foods' },
-    { value: 'produce', label: 'Produce' },
-    { value: 'personal-care', label: 'Personal Care Items' },
-    { value: 'over-the-counter-medicine', label: 'Over-the-Counter Medicine' },
-    { value: 'household', label: 'Household Items' },
-    { value: 'automotive-supplies', label: 'Automotive Supplies' },
-    { value: 'tobacco-products', label: 'Tobacco Products' },
-    { value: 'lottery-tickets-gift-cards', label: 'Lottery Tickets and Gift Cards' },
-    { value: 'magazines-newspapers', label: 'Magazines and Newspapers' },
-    { value: 'batteries-electronics-accessories', label: 'Batteries and Electronics Accessories' },
-    { value: 'pet-supplies', label: 'Pet Supplies' },
-    { value: 'seasonal', label: 'Seasonal Items' },
-    { value: 'miscellaneous', label: 'Miscellaneous' }
-];
-
 const storage = [
-    { value: 'select', label: 'Select' },
-    { value: 'normal', label: 'Normal Storage' },
-    { value: 'cold', label: 'Cold Storage' },
-    { value: 'hot', label: 'Hot Storage' },
-    { value: 'hazardious', label: 'Hazardous Materials Storage' }
+    { value: 'select', label: 'select' },
+    { value: 'normal', label: 'normal storage' },
+    { value: 'cold', label: 'cold storage' },
+    { value: 'hot', label: 'hot storage' },
+    { value: 'hazardious', label: 'hazardous materials storage' }
 ];
 
 const Add = () => {
 
     const navigate = useNavigate()
+
+    const [categories, setCategories] = useState()
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('http://localhost:8081/api-product-category')
+                const data = await response.json()
+                setCategories(data)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        fetchCategories()
+    }, [])
 
     const [skuValid, setSkuValid] = useState()
     const [nameValid, setNameValid] = useState()
@@ -278,10 +272,13 @@ const Add = () => {
                                     <select
                                         id="category"
                                         name="category"
-                                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-600 text-sm leading-6 cursor-pointer"
+                                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-600 text-sm leading-6 cursor-pointer capitalize"
                                         onBlur={(e) => e.target.value === 'select' ? setCatValid(false) : setCatValid(true)}
                                     >
-                                        {categories.map(({ value, label }, index) => <option key={value} value={value} >{label}</option>)}
+                                        <option value='select'>Select</option>
+                                        {categories?.map((category) =>
+                                            <option key={category.productCategoryId} value={category.productCategoryName} >{category.productCategoryName}</option>
+                                        )}
                                     </select>
                                 </div>
                                 {catValid === false && <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">
@@ -297,10 +294,10 @@ const Add = () => {
                                     <select
                                         id="storage-type"
                                         name="storage-type"
-                                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-600 text-sm leading-6 cursor-pointer"
+                                        className="block w-full rounded-md border-0 py-2 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-sky-600 text-sm leading-6 cursor-pointer capitalize"
                                         onBlur={(e) => e.target.value === 'select' ? setStorValid(false) : setStorValid(true)}
                                     >
-                                        {storage.map(({ value, label }, index) => <option key={value} value={value} >{label}</option>)}
+                                        {storage?.map((storage) => <option key={storage.value} value={storage.value} >{storage.label}</option>)}
                                     </select>
                                 </div>
                                 {storValid === false && <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1">

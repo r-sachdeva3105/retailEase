@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Dialog, DialogPanel, Description, Field, Label } from '@headlessui/react'
+import { Button, Dialog, DialogPanel, Description, Field, Label, Input } from '@headlessui/react'
+import clsx from 'clsx'
 
 const Products = () => {
 
@@ -40,17 +41,17 @@ const Products = () => {
 
     const [deleteProductSKU, setDeleteProductSKU] = useState()
     const [deleteProductName, setDeleteProductName] = useState()
-    const [isDialogOpen, setIsDialogOpen] = useState(false)
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     const [deleteValid, setDeleteValid] = useState(true)
 
     const handleDelete = (sku, name) => {
         setDeleteProductSKU(sku)
         setDeleteProductName(name)
-        setIsDialogOpen(true)
+        setIsDeleteDialogOpen(true)
     }
 
-    const close = () => {
-        setIsDialogOpen(false)
+    const closeDeleteDialog = () => {
+        setIsDeleteDialogOpen(false)
         setDeleteValid(true)
     }
 
@@ -69,7 +70,7 @@ const Products = () => {
         await fetch('http://localhost:8081/api-product/delete-product', request)
             .then(res => {
                 if (res?.ok) {
-                    setIsDialogOpen(false)
+                    setIsDeleteDialogOpen(false)
                     setDeleteValid(true)
                     window.location.reload()
                 } else {
@@ -80,6 +81,69 @@ const Products = () => {
                 console.error(err)
                 setDeleteValid(false)
             })
+    }
+
+    const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+    const [addProductSKU, setAddProductSKU] = useState()
+    const [addProductName, setAddProductName] = useState()
+    const [addProductExpirable, setAddProductExpirable] = useState()
+
+    const [quantValid, setQuantValid] = useState()
+    const [expValid, setExpValid] = useState()
+
+    const handleAdd = (sku, name, isExpirable) => {
+        setAddProductSKU(sku)
+        setAddProductName(name)
+        setAddProductExpirable(isExpirable)
+        setIsAddDialogOpen(true)
+    }
+
+    const handleAddConfirm = async (e) => {
+        console.log(e)
+        e.preventDefault()
+        if (parseInt(e.target.form[0].value < 1)) {
+            setQuantValid(false)
+        }
+        if (addProductExpirable && e.target.form[1].value === '') {
+            setExpValid(false)
+        }
+        if ((quantValid && addProductExpirable && expValid) || (quantValid && !addProductExpirable)) {
+            console.log(e.target.form[0].value)
+            const request = {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'content-type': 'application/json; charset=utf-8',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    "productSKU": addProductSKU,
+                    "warehouseID": 2,
+                    "expiryDate": addProductExpirable ? (e.target.form[1].value ? e.target.form[1].value : "") : "",
+                    "quantity": e.target.form[0].value ? parseInt(e.target.form[0].value) : 0
+                })
+            }
+            await fetch('http://localhost:8081/api-inventory/add-inventory', request)
+                .then(res => {
+                    if (res?.ok) {
+                        setIsAddDialogOpen(false)
+                        setQuantValid(true)
+                        setExpValid(true)
+                    } else {
+                        setQuantValid(false)
+                        setExpValid(false)
+                    }
+                })
+                .catch(err => {
+                    console.error(err)
+                })
+        }
+    }
+
+    const closeAddDialog = () => {
+        setIsAddDialogOpen(false)
+        setQuantValid(true)
+        setExpValid(true)
     }
 
     return (
@@ -154,8 +218,23 @@ const Products = () => {
                                         {product.storageType}
                                     </td>
                                     <td className="px-4 py-4 flex gap-3">
-                                        <p className="font-medium text-sky-600 hover:underline cursor-pointer">Edit</p>
-                                        <p onClick={() => handleDelete(product.productSKU, product.productName)} className="font-medium text-sky-600 hover:underline cursor-pointer">Delete</p>
+                                        <p
+                                            onClick={() => handleAdd(product.productSKU, product.productName, product.isExpirable)}
+                                            className="font-medium text-sky-600 hover:underline cursor-pointer"
+                                        >
+                                            Add
+                                        </p>
+                                        <p
+                                            className="font-medium text-sky-600 hover:underline cursor-pointer"
+                                        >
+                                            Edit
+                                        </p>
+                                        <p
+                                            onClick={() => handleDelete(product.productSKU, product.productName)}
+                                            className="font-medium text-sky-600 hover:underline cursor-pointer"
+                                        >
+                                            Delete
+                                        </p>
                                     </td>
                                 </tr>
                             ))}
@@ -163,7 +242,7 @@ const Products = () => {
                     </table>
                 </div>
             </main>
-            <Dialog as="div" open={isDialogOpen} onClose={close} className="relative z-10 focus:outline-none">
+            <Dialog as="div" open={isDeleteDialogOpen} onClose={closeDeleteDialog} className="relative z-10 focus:outline-none">
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center p-4">
                         <DialogPanel transition className="w-full max-w-md rounded-xl bg-gray-800 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
@@ -172,12 +251,12 @@ const Products = () => {
                                     <Label className="text-md font-medium text-white">Delete Product</Label>
                                     <Description className="text-sm/6 text-white/50">Are you sure you want to delete {deleteProductName}?</Description>
                                     {deleteValid === false && <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1">
-                                        Product is still in inventory!
+                                        Product is still in inventory !
                                     </span>}
                                     <div className="mt-4 flex justify-end gap-4">
                                         <Button
                                             className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
-                                            onClick={close}
+                                            onClick={closeDeleteDialog}
                                         >
                                             Cancel
                                         </Button>
@@ -186,6 +265,71 @@ const Products = () => {
                                             onClick={handleDeleteConfirm}
                                         >
                                             Delete
+                                        </Button>
+                                    </div>
+                                </form>
+                            </Field>
+
+                        </DialogPanel>
+                    </div>
+                </div>
+            </Dialog>
+            <Dialog as="div" open={isAddDialogOpen} onClose={closeAddDialog} className="relative z-10 focus:outline-none">
+                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4">
+                        <DialogPanel transition className="w-full max-w-md rounded-xl bg-gray-800 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+                            <Field>
+                                <form>
+                                    <Label className="text-md font-medium text-white">Add Product</Label>
+                                    <Description className="text-sm/6 text-white/50">Add {addProductName} to the Inventory</Description>
+                                    <div className="mt-4">
+                                        <Label className="text-sm/6 font-medium text-white">Quantity</Label>
+                                        <Input
+                                            type="number"
+                                            autoFocus
+                                            className={clsx(
+                                                'mt-1 block w-2/3 rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white',
+                                                'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
+                                            )}
+                                            onBlur={(e) => e.target.value < 1 ? setQuantValid(false) : setQuantValid(true)}
+                                        />
+                                        {quantValid === false && <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1">
+                                            Invalid quantity field !
+                                        </span>}
+
+                                        {addProductExpirable && <Label className="text-sm/6 font-medium text-white">Expiry Date</Label>}
+                                        {addProductExpirable && <div className="relative">
+                                            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+                                                </svg>
+                                            </div>
+                                            <Input
+                                                id="datepicker-autohide" datepicker datepicker-autohide
+                                                className={clsx(
+                                                    'mt-1 block w-2/3 rounded-lg ps-10 border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white',
+                                                    'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
+                                                )}
+                                                onBlur={(e) => e.target.value === '' ? setExpValid(false) : setExpValid(true)}
+                                            />
+                                        </div>}
+                                        {addProductExpirable && expValid === false && <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1">
+                                            Invalid expiry field !
+                                        </span>}
+
+                                    </div>
+                                    <div className="mt-4 flex justify-end gap-4">
+                                        <Button
+                                            className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                                            onClick={closeAddDialog}
+                                        >
+                                            Cancel
+                                        </Button>
+                                        <Button
+                                            className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                                            onClick={handleAddConfirm}
+                                        >
+                                            Add
                                         </Button>
                                     </div>
                                 </form>

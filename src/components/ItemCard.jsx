@@ -69,7 +69,10 @@ const ItemCard = (props) => {
         <>
             <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 {props.inventory?.map((product) => (
-                    <div key={product.productSKU} className="group relative p-4 rounded-md shadow overflow-hidden bg-white">
+                    <div
+                        key={product.productSKU}
+                        className="group relative p-4 rounded-md shadow overflow-hidden bg-white"
+                    >
                         <div className="w-full h-60 overflow-hidden rounded-md">
                             <img
                                 src={`data:image/png;base64,${product.product.productImage}`}
@@ -77,16 +80,14 @@ const ItemCard = (props) => {
                                 className="h-full object-cover mx-auto"
                             />
                         </div>
-                        <div className="mt-4">
-                            <div className="items-center">
-                                <h3 className="text-lg font-bold text-gray-700">
-                                    <a href={product.href} className="hover:text-gray-900">
-                                        {product.product.productName}
-                                    </a>
+                        <div className="mt-4 flex flex-col justify-between">
+                            <div className="flex-col items-center">
+                                <h3 className="text-lg font-bold text-gray-900">
+                                    {product.product.productName}
                                 </h3>
                                 <p className="text-md font-semibold text-gray-900">${product.product.productSellingPrice}</p>
                             </div>
-                            <div className="flex justify-between items-center mt-2">
+                            <div className="flex justify-between items-center">
                                 <p className="text-sm font-semibold text-gray-500">Quantity: {product.quantity}</p>
                                 <button
                                     type="button"

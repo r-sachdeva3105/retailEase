@@ -7,7 +7,7 @@ import Add from './pages/Add';
 import Dashboard from './pages/Dashboard';
 import Categories from './pages/Categories';
 import Products from './pages/Products';
-import Sales from './pages/Sales';
+import Transactions from './pages/Transactions';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
           <Route path='inventory' element={<Inventory />}></Route>
           <Route path='categories' element={<Categories />}></Route>
           <Route path='products' element={<Products />}></Route>
-          <Route path='sales' element={<Sales />}></Route>
+          <Route path='transactions' element={<Transactions />}></Route>
           <Route path='add' element={<Add />}></Route>
         </Routes>
     </div>

@@ -36,6 +36,7 @@ const Inventory = () => {
             }
         }
         fetchInventory()
+        // eslint-disable-next-line
     }, [])
 
     const handleChange = (e) => {
@@ -76,6 +77,7 @@ const Inventory = () => {
 
             <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                 {isRendered && <ItemCard inventory={filteredInventory} />}
+                {/* eslint-disable-next-line */}
                 {filteredInventory == '' && <span className="text-lg font-semibold">No Product Found :(</span>}
             </main>
         </div>

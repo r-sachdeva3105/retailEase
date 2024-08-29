@@ -2,13 +2,13 @@ import React from 'react'
 import inventory from '../assets/inventory.jpg'
 import products from '../assets/products.jpg'
 import categories from '../assets/categories.jpg'
-import sales from '../assets/sales.jpg'
+import transactions from '../assets/transactions.jpg'
 
 const pages = [
     { src: inventory, alt: "inventory", name: "Inventory" },
     { src: categories, alt: "categories", name: "Categories" },
     { src: products, alt: "products", name: "Products" },
-    { src: sales, alt: "sales", name: "Sales" },
+    { src: transactions, alt: "transactions", name: "Transactions" },
 ];
 
 const Dashboard = () => {
@@ -31,7 +31,7 @@ const Dashboard = () => {
                         <div key={index} className="relative p-4 rounded-md shadow cursor-pointer hover:bg-gray-200">
                             <a href={page.alt}>
                                 <img src={page.src} alt={page.alt} />
-                                <p className="text-2xl font-bold text-center mt-2 tracking-wide">{page.name}</p>
+                                <p className="text-lg md:text-2xl font-bold text-center mt-2 tracking-wide">{page.name}</p>
                             </a>
                         </div>
                     ))}
