@@ -13,7 +13,6 @@ const Login = () => {
     const [passwordValid, setPasswordValid] = useState()
 
     const handleSubmit = (e) => {
-        e.preventDefault()
         e.target.form[2].value === "" ? setEmailValid(false) : setEmailValid(true)
         e.target.form[3].value === "" ? setPasswordValid(false) : setPasswordValid(true)
 
@@ -26,7 +25,7 @@ const Login = () => {
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-20 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <h2 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">
+                    <h2 className="mt-10 text-center text-3xl sm:text-4xl font-bold leading-9 tracking-tight text-gray-900">
                         Sign in to your account
                     </h2>
                 </div>
@@ -35,7 +34,7 @@ const Login = () => {
                     <form className="space-y-6">
                         <div>
                             <label htmlFor="user" className="block text-sm font-medium leading-6 text-gray-900">
-                                User Role
+                                Role
                             </label>
                             <div className="mt-2">
                                 <RadioGroup
@@ -47,14 +46,17 @@ const Login = () => {
                                     className="flex justify-between"
                                 >
                                     {roles.map((role, index) => (
-                                        <Field key={index} className="flex items-center gap-2">
-                                            <Radio
+                                        <Field
+                                            key={index}
+                                            className="flex items-center gap-2 ring-1 ring-gray-300 shadow-sm rounded-md px-3 py-2 cursor-pointer"
+                                        >
+                                            < Radio
                                                 value={role}
-                                                className="group flex size-5 items-center justify-center rounded-full border bg-white data-[checked]:bg-blue-400"
+                                                className="group flex size-5 items-center justify-center rounded-full border bg-white focus:outline-none data-[checked]:bg-sky-500"
                                             >
                                                 <span className="invisible size-2 rounded-full bg-white group-data-[checked]:visible" />
                                             </Radio>
-                                            <Label className="capitalize">{role}</Label>
+                                            <Label className="capitalize cursor-pointer">{role}</Label>
                                         </Field>
                                     ))}
                                 </RadioGroup>
@@ -111,9 +113,9 @@ const Login = () => {
                                 Sign in
                             </button>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </form >
+                </div >
+            </div >
         </>
     )
 }

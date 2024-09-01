@@ -6,7 +6,6 @@ import clsx from 'clsx'
 const Products = () => {
 
     const navigate = useNavigate()
-    const add = () => navigate('/add')
 
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
@@ -18,7 +17,6 @@ const Products = () => {
                 await fetch('http://localhost:8081/api-product/all-products')
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data)
                         setProducts(data)
                         setFilteredProducts(data)
                         setIsRendered(true)
@@ -118,7 +116,7 @@ const Products = () => {
                 },
                 body: JSON.stringify({
                     "productSKU": addProductSKU,
-                    "warehouseID": 2,
+                    "warehouseID": 1,
                     "expiryDate": addProductExpirable ? (e.target.form[1].value ? e.target.form[1].value : "") : "",
                     "quantity": e.target.form[0].value ? parseInt(e.target.form[0].value) : 0
                 })
@@ -168,7 +166,7 @@ const Products = () => {
                                 onChange={handleChange}
                             />
                         </div>
-                        <button onClick={add} type="button" className="inline-flex items-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
+                        <button onClick={() => navigate('/add')} type="button" className="inline-flex items-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
                             <svg className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                             </svg>
@@ -298,21 +296,16 @@ const Products = () => {
                                         </span>}
 
                                         {addProductExpirable && <Label className="text-sm/6 font-medium text-white">Expiry Date</Label>}
-                                        {addProductExpirable && <div className="relative">
-                                            <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
-                                                </svg>
-                                            </div>
-                                            <Input
-                                                id="datepicker-autohide" datepicker datepicker-autohide
-                                                className={clsx(
-                                                    'mt-1 block w-2/3 rounded-lg ps-10 border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white',
-                                                    'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
-                                                )}
-                                                onBlur={(e) => e.target.value === '' ? setExpValid(false) : setExpValid(true)}
-                                            />
-                                        </div>}
+                                        {addProductExpirable && <Input
+                                            id="expiry-date"
+                                            name="expiry-date"
+                                            type="date"
+                                            className={clsx(
+                                                'mt-1 block w-2/3 rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white cursor-text',
+                                                'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
+                                            )}
+                                            onBlur={(e) => e.target.value === '' ? setExpValid(false) : setExpValid(true)}
+                                        />}
                                         {addProductExpirable && expValid === false && <span className="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1">
                                             Invalid expiry field !
                                         </span>}

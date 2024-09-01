@@ -17,6 +17,7 @@ const Categories = () => {
                 setIsRendered(true)
             } catch (error) {
                 console.error(error)
+                setCategories('')
             }
         }
         fetchCategories()
@@ -68,8 +69,6 @@ const Categories = () => {
         }
     }
 
-    isRendered && console.log(categories)
-
     return (
         <div className="min-h-full">
 
@@ -90,6 +89,7 @@ const Categories = () => {
             {/* MAIN */}
 
             <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                {categories === '' && <span className="text-lg font-semibold">No Category Found :(</span>}
                 <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {isRendered && categories?.map((category) => (
                         <div key={category.productCategoryId} className="group relative p-4 rounded-md shadow cursor-pointer hover:bg-gray-200">

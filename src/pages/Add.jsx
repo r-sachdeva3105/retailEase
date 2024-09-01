@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { PhotoIcon, ViewfinderCircleIcon } from '@heroicons/react/24/solid'
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useNavigate } from 'react-router-dom'
+import { BarcodeScanner } from 'react-barcode-scanner'
+import 'react-barcode-scanner/polyfill'
 
 const storage = [
     { value: 'select', label: 'select' },
@@ -55,6 +57,19 @@ const Add = () => {
             }
             reader.readAsDataURL(image)
         })
+    }
+
+    const [isScanDialogOpen, setIsScanDialogOpen] = useState(false)
+    const [barcodeData, setBarcodeData] = useState('')
+
+    const handleScan = (barcode) => {
+        if (barcode) {
+            console.log(barcode)
+            setBarcodeData(barcode.rawValue)
+            setIsScanDialogOpen(false)
+        } else {
+            console.error('Error scanning barcode')
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -113,7 +128,7 @@ const Add = () => {
                         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div className="sm:col-span-3">
                                 <label htmlFor="sku" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Product SKU
+                                    Product Code
                                 </label>
                                 <div className="mt-2">
                                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-sky-600">
@@ -123,11 +138,14 @@ const Add = () => {
                                             id="sku"
                                             autoComplete="sku"
                                             className="block bg-transparent flex-1 border-0 py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                            value={barcodeData}
+                                            onChange={(e) => setBarcodeData(e.target.value)}
                                             onBlur={(e) => e.target.value === '' ? setSkuValid(false) : setSkuValid(true)}
                                         />
                                         <button
                                             type="button"
                                             className="flex gap-1 items-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                                            onClick={() => setIsScanDialogOpen(true)}
                                         >
                                             Scan
                                             <ViewfinderCircleIcon className="h-4" />
@@ -344,7 +362,7 @@ const Add = () => {
 
                         <div className="mt-10 space-y-2">
                             <legend className="block text-sm font-medium leading-6 text-gray-900">Expiry</legend>
-                            <div className="flex justify-between md:justify-normal md:gap-44">
+                            <div className="flex justify-between md:justify-normal md:gap-40">
                                 <div className="flex gap-x-3">
                                     <div className="flex h-6 items-center">
                                         <input
@@ -367,7 +385,7 @@ const Add = () => {
                                             id="expiry-date"
                                             name="expiry-date"
                                             type="date"
-                                            className="h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-600 cursor-pointer"
+                                            className="rounded-md py-1.5 px-3 text-sm shadow-sm ring-1 ring-inset ring-gray-300 border-0 focus:ring-sky-600 cursor-pointer"
                                         />
                                     </div>
                                     <div className="text-sm leading-6">
@@ -402,12 +420,33 @@ const Add = () => {
                             <p className="mt-2 text-sm/6 text-white/50">
                                 Please fill all the product details as all the details are mandatory to add the product.
                             </p>
-                            <div className="mt-4">
+                            <div className="mt-4 flex justify-end">
                                 <Button
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                                     onClick={() => setIsDialogOpen(false)}
                                 >
                                     Got it, thanks!
+                                </Button>
+                            </div>
+                        </DialogPanel>
+                    </div>
+                </div>
+            </Dialog>
+            <Dialog open={isScanDialogOpen} onClose={() => setIsScanDialogOpen(false)} className="relative z-10 focus:outline-none">
+                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center p-4">
+                        <DialogPanel transition className="w-full max-w-md rounded-xl bg-gray-800 p-6 backdrop-blur-2xl transition duration-500 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+                            <DialogTitle as="h3" className="text-base/none font-medium text-white mb-4">Scan Your Product Code</DialogTitle>
+                            <BarcodeScanner
+                                options={{ formats: ['code_128', 'code_39', 'code_93', 'codabar', 'ean_13', 'ean_8', 'itf', 'upc_a', 'upc_e'] }}
+                                onCapture={handleScan}
+                            />
+                            <div className="mt-4 flex justify-end">
+                                <Button
+                                    className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                                    onClick={() => setIsScanDialogOpen(false)}
+                                >
+                                    Cancel
                                 </Button>
                             </div>
                         </DialogPanel>

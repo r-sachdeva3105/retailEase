@@ -3,15 +3,19 @@ import inventory from '../assets/inventory.jpg'
 import products from '../assets/products.jpg'
 import categories from '../assets/categories.jpg'
 import transactions from '../assets/transactions.jpg'
+import { useNavigate } from 'react-router-dom'
 
 const pages = [
-    { src: inventory, alt: "inventory", name: "Inventory" },
-    { src: categories, alt: "categories", name: "Categories" },
-    { src: products, alt: "products", name: "Products" },
-    { src: transactions, alt: "transactions", name: "Transactions" },
+    { src: inventory, href: "inventory", name: "Inventory" },
+    { src: categories, href: "categories", name: "Categories" },
+    { src: products, href: "products", name: "Products" },
+    { src: transactions, href: "transactions", name: "Transactions" },
 ];
 
 const Dashboard = () => {
+
+    const navigate = useNavigate()
+
     return (
         <div className="min-h-full">
 
@@ -29,10 +33,10 @@ const Dashboard = () => {
                 <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {pages.map((page, index) => (
                         <div key={index} className="relative p-4 rounded-md shadow cursor-pointer hover:bg-gray-200">
-                            <a href={page.alt}>
-                                <img src={page.src} alt={page.alt} />
+                            <span onClick={() => navigate('/'+page.href)}>
+                                <img src={page.src} alt={page.href} />
                                 <p className="text-lg md:text-2xl font-bold text-center mt-2 tracking-wide">{page.name}</p>
-                            </a>
+                            </span>
                         </div>
                     ))}
                 </div>
