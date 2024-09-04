@@ -36,7 +36,7 @@ const Header = () => {
     useEffect(() => {
         const path = location.pathname
         const activeNavItem = navigation.find((item) => item.href === path)
-        path !== '/login' && activeNavItem !== undefined ? setActiveItem(activeNavItem.name) : setActiveItem()
+        path !== '/login' && path !== '/checkout' && activeNavItem !== undefined ? setActiveItem(activeNavItem.name) : setActiveItem()
     }, [location.pathname])
 
     const openProfile = () => {
@@ -52,13 +52,13 @@ const Header = () => {
             <Disclosure as="nav" className="bg-gray-800">
                 {({ open }) => (
                     <>
-                        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <div className="mx-auto max-w-7xl px-4">
                             <div className="flex h-20 items-center justify-between">
                                 <div className="flex items-center">
                                     <div className="flex-shrink-0">
                                         <h2 className='text-white font-bold text-4xl'>RetailEase</h2>
                                     </div>
-                                    {path !== '/login' && <div className="hidden md:block">
+                                    {path !== '/login' && path !== '/checkout' && <div className="hidden md:block">
                                         <div className="ml-10 flex items-baseline space-x-4">
                                             {navigation.map((item) => (
                                                 <p
@@ -120,7 +120,7 @@ const Header = () => {
                         </div>
 
                         <DisclosurePanel className="md:hidden transition duration-500">
-                            <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+                            {path !== '/checkout' && <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
                                 {navigation.map((item) => (
                                     <DisclosureButton
                                         key={item.name}
@@ -136,7 +136,7 @@ const Header = () => {
                                         {item.name}
                                     </DisclosureButton>
                                 ))}
-                            </div>
+                            </div>}
                             <div className="border-t border-gray-700 pb-3 pt-4">
                                 <div className="flex items-center px-5">
                                     <div className="flex-shrink-0">

@@ -117,7 +117,7 @@ const Add = () => {
 
     return (
         <>
-            <form className="mx-auto my-10 max-w-7xl px-4 sm:px-6 lg:px-8">
+            <form className="mx-auto my-10 max-w-7xl px-4">
                 <div className="space-y-12">
                     <div className="pb-12">
                         <h2 className="text-base font-semibold leading-7 text-gray-900">Product Information</h2>

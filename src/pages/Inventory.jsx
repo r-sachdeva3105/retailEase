@@ -54,7 +54,7 @@ const Inventory = () => {
             {/* HEADER */}
 
             <header className="bg-white shadow">
-                <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 md:flex justify-between items-center">
+                <div className="mx-auto max-w-7xl p-4 md:flex justify-between items-center">
                     <h1 className=" text-center text-3xl font-bold tracking-tight text-gray-900">Inventory</h1>
                     <div className="flex justify-center pt-2 md:pt-0">
                         <div className="relative">
@@ -75,7 +75,7 @@ const Inventory = () => {
 
             {/* MAIN */}
 
-            <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <main className="mx-auto max-w-7xl p-4">
                 {isRendered && <ItemCard inventory={filteredInventory} />}
                 {/* eslint-disable-next-line */}
                 {filteredInventory == '' && <span className="text-lg font-semibold">No Product Found :(</span>}

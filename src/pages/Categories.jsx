@@ -75,7 +75,7 @@ const Categories = () => {
             {/* HEADER */}
 
             <header className="bg-white shadow">
-                <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
+                <div className="mx-auto max-w-7xl p-4 flex justify-between items-center">
                     <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900">Categories</h1>
                     <button onClick={open} type="button" className="inline-flex items-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600">
                         <svg className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -88,9 +88,9 @@ const Categories = () => {
 
             {/* MAIN */}
 
-            <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <main className="mx-auto max-w-7xl p-4">
                 {categories === '' && <span className="text-lg font-semibold">No Category Found :(</span>}
-                <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                <div className="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {isRendered && categories?.map((category) => (
                         <div key={category.productCategoryId} className="group relative p-4 rounded-md shadow cursor-pointer hover:bg-gray-200">
                             <Link to={'/inventory?category=' + category.productCategoryId}>
