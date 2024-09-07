@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const ItemForm = () => {
-  return (
-    <div>ItemForm</div>
-  )
-}
+  return <div>ItemForm</div>;
+};
 
-export default ItemForm
+export default ItemForm;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { PencilSquareIcon } from '@heroicons/react/24/solid'
+import { FaPencil } from "react-icons/fa6"
 import { Button, Dialog, DialogPanel, Description, Field, Input, Label } from '@headlessui/react'
 import clsx from 'clsx'
 
@@ -102,7 +102,7 @@ const ItemCard = (props) => {
                                     }}
                                     className="py-2 px-4 bg-sky-600 cursor-pointer rounded-md hover:bg-sky-700"
                                 >
-                                    <PencilSquareIcon className="h-5 text-white" />
+                                    <FaPencil className="h-5 text-white" />
                                 </button>
                             </div>
                         </div>
