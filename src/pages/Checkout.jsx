@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { BarcodeScanner } from "react-barcode-scanner";
 import "react-barcode-scanner/polyfill";
 import { BsUpcScan } from "react-icons/bs";
+import { FaBackspace } from "react-icons/fa";
 
 const Checkout = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [barcodeData, setBarcodeData] = useState([]);
+  const [quantity, setQuantity] = useState(0);
 
   const handleScan = (barcode) => {
     if (barcode) {
@@ -106,77 +108,85 @@ const Checkout = () => {
               <div className="col-span-1">
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-green-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                 >
                   Inquiry
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-red-700 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700"
                 >
                   Delete
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-amber-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-amber-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
                 >
                   Clear
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-gray-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-gray-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                 >
-                  Settings
+                  Edit
                 </button>
               </div>
               <div className="col-span-1">
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  onClick={() => setQuantity(quantity * 10 + 1)}
                 >
                   1
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  onClick={() => setQuantity(quantity * 10 + 4)}
                 >
                   4
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  onClick={() => setQuantity(quantity * 10 + 7)}
                 >
                   7
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-red-700 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700"
+                  onClick={() => setQuantity(Math.floor(quantity / 10))}
                 >
-                  .
+                  <FaBackspace size={24} />
                 </button>
               </div>
               <div className="col-span-1">
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  onClick={() => setQuantity(quantity * 10 + 2)}
                 >
                   2
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  onClick={() => setQuantity(quantity * 10 + 5)}
                 >
                   5
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  onClick={() => setQuantity(quantity * 10 + 8)}
                 >
                   8
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  onClick={() => setQuantity(quantity * 10)}
                 >
                   0
                 </button>
@@ -184,25 +194,28 @@ const Checkout = () => {
               <div className="col-span-1">
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  onClick={() => setQuantity(quantity * 10 + 3)}
                 >
                   3
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  onClick={() => setQuantity(quantity * 10 + 6)}
                 >
                   6
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-800 px-3 py-5 text-md lg:text-xl font-semibold text-white shadow hover:bg-sky-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-800"
+                  onClick={() => setQuantity(quantity * 10 + 9)}
                 >
                   9
                 </button>
                 <button
                   type="button"
-                  className="mt-2 inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+                  className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-green-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
                 >
                   Enter
                 </button>
@@ -244,15 +257,31 @@ const Checkout = () => {
                   />
                 )}
               </div>
-              <input
-                type="number"
-                name="price"
-                id="price"
-                class="block w-full mt-3 rounded-md border-0 py-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-md sm:leading-6"
-                placeholder="0.00"
-                autoComplete="off"
-                disabled
-              />
+              <div className="flex gap-2 w-full">
+                <div className="w-1/2">
+                  <label
+                    htmlFor="price"
+                    className="block mt-3 text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Quantity
+                  </label>
+                  <input
+                    type="number"
+                    name="price"
+                    id="price"
+                    class="block w-full rounded-md border-0 py-2 text-md lg:text-lg text-gray-900 font-bold ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:leading-6"
+                    autoComplete="off"
+                    value={quantity}
+                    disabled
+                  />
+                </div>
+                <button
+                  type="button"
+                  className="mt-2 w-1/2 h-10 lg:h-11 self-end justify-center rounded-md bg-sky-600 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                >
+                  Manual Entry
+                </button>
+              </div>
             </div>
             <div>
               <h2 className="text-lg font-bold text-gray-900 my-2">
@@ -282,7 +311,7 @@ const Checkout = () => {
               </dl>
               <button
                 type="button"
-                className="mt-2 inline-flex w-full justify-center rounded-md bg-sky-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-sky-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                 onClick={handleCheckout}
               >
                 Proceed to Pay
