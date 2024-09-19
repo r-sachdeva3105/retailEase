@@ -14,7 +14,8 @@ const storage = [
   { value: "hazardious", label: "hazardous materials storage" },
 ];
 
-const Add = () => {
+const Edit = () => {
+  console.log();
   const navigate = useNavigate();
 
   const [categories, setCategories] = useState();
@@ -653,4 +654,4 @@ const Add = () => {
   );
 };
 
-export default Add;
+export default Edit;
