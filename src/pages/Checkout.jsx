@@ -3,8 +3,106 @@ import { BarcodeScanner } from "react-barcode-scanner";
 import "react-barcode-scanner/polyfill";
 import { BsUpcScan } from "react-icons/bs";
 import { FaBackspace } from "react-icons/fa";
+import clsx from "clsx";
+
+import {
+  Button,
+  Dialog,
+  DialogPanel,
+  Description,
+  Field,
+  Input,
+  Label,
+} from "@headlessui/react";
+
+
 
 const Checkout = () => {
+
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const [newItem, setNewItem] = useState("");
+  const [transactionItems, setItems] = useState([], addItem);
+
+
+
+
+  const handleRowClick = (row) => {
+    console.log('Row clicked:', row);
+  };
+
+  function handleInputChange(event) {
+    setNewItem(event.target.value);
+    console.log(newItem);
+  }
+
+  function clearItems() {
+    const clearedTransactionList = transactionItems.filter(() => false);
+    console.log("hello");
+    setItems(clearedTransactionList);
+  }
+
+  function addItem() {
+    for (let i = 0; i < products.length; i++) {
+      if (products[i].productSKU === parseInt(newItem)) {
+        setItems([...transactionItems, products[i]])
+      }
+    }
+    setNewItem("");
+  }
+
+  const open = () => {
+    setIsDialogOpen(true);
+  };
+
+  const close = () => {
+    //setCatValid(true);
+    setIsDialogOpen(false);
+  };
+
+  // To verify productSKU
+  const isProductSKUFound = (skuToFind) => {
+    for (let i = 0; i < products.length; i++) {
+      if (products[i].productSKU === skuToFind) {
+        alert("yay")
+      }
+    }
+  }
+
+  const products = [
+    {
+      "productSKU": 123456789,
+      "productName": "Sample Product",
+      "productCostPrice": 50.0,
+      "productSellingPrice": 75.0,
+      "productDescription": "This is a sample product description.",
+      "storageType": "Cool",
+      "isExpirable": true,
+      "expiryDate": "2025-12-31",
+      "discountID": 1,
+      "productCategoryName": "Electronics",
+      "productQuantity": 100,
+      "warehouseName": "Main Warehouse",
+      "productImage": "iVBORw0KGgoAA"
+    },
+    {
+      "productSKU": 987654321,
+      "productName": "Sample Product 2",
+      "productCostPrice": 50.0,
+      "productSellingPrice": 75.5,
+      "productDescription": "This is a sample product description.",
+      "storageType": "Cool",
+      "isExpirable": true,
+      "expiryDate": "2025-12-31",
+      "discountID": 1,
+      "productCategoryName": "Electronics",
+      "productQuantity": 100,
+      "warehouseName": "Main Warehouse",
+      "productImage": "iVBORw0KGgoAA"
+    }
+  ];
+
   const [isEnabled, setIsEnabled] = useState(false);
   const [barcodeData, setBarcodeData] = useState([]);
   const [quantity, setQuantity] = useState(0);
@@ -65,43 +163,29 @@ const Checkout = () => {
                     </th>
                   </tr>
                 </thead>
-                {/* {isRendered && <tbody>
-                                    {filteredProducts?.map((product) => (
-                                        <tr key={product.productSKU} className="odd:bg-white even:bg-gray-50 border-b">
-                                            <th scope="row" className="px-4 py-4 font-medium text-gray-800 whitespace-nowrap capitalize">
-                                                {product.productName}
-                                            </th>
-                                            <td className="px-4 py-4 capitalize">
-                                                {product.productCategoryName}
-                                            </td>
-                                            <td className="px-4 py-4">
-                                                ${product.productSellingPrice}
-                                            </td>
-                                            <td className="px-4 py-4 capitalize">
-                                                {product.storageType}
-                                            </td>
-                                            <td className="px-4 py-4 flex gap-3">
-                                                <p
-                                                    onClick={() => handleAdd(product.productSKU, product.productName, product.isExpirable)}
-                                                    className="font-medium text-sky-600 hover:underline cursor-pointer"
-                                                >
-                                                    Add
-                                                </p>
-                                                <p
-                                                    className="font-medium text-sky-600 hover:underline cursor-pointer"
-                                                >
-                                                    Edit
-                                                </p>
-                                                <p
-                                                    onClick={() => handleDelete(product.productSKU, product.productName)}
-                                                    className="font-medium text-sky-600 hover:underline cursor-pointer"
-                                                >
-                                                    Delete
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>} */}
+                {
+                  transactionItems.map((product, index) => (
+                    <tbody>
+                      <tr onClick={() => handleRowClick(product)}>
+                        <td className="px-4 py-3">
+                          {product.productName}
+                        </td>
+                        <td className="px-4 py-3">
+                          {product.productSellingPrice}
+                        </td>
+                        <td className="px-4 py-3">
+                          1
+                        </td>
+                        <td className="px-4 py-3">
+                          0.0
+                        </td>
+                        <td className="px-4 py-3">
+                          {product.productSellingPrice}
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))
+                }
               </table>
             </div>
             <div className="grid grid-cols-4 gap-x-2">
@@ -121,6 +205,7 @@ const Checkout = () => {
                 <button
                   type="button"
                   className="mt-2 inline-flex w-full h-16 justify-center rounded-md bg-amber-600 px-3 py-5 text-md lg:text-lg font-semibold text-white shadow hover:bg-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600"
+                  onClick={() => clearItems()}
                 >
                   Clear
                 </button>
@@ -278,6 +363,7 @@ const Checkout = () => {
                 <button
                   type="button"
                   className="mt-2 w-1/2 h-10 lg:h-11 self-end justify-center rounded-md bg-sky-600 text-md lg:text-lg font-semibold text-white shadow hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                  onClick={open}
                 >
                   Manual Entry
                 </button>
@@ -320,6 +406,56 @@ const Checkout = () => {
           </div>
         </div>
       </main>
+
+
+      <Dialog
+        as="div"
+        open={isDialogOpen}
+        onClose={close}
+        className="relative z-10 focus:outline-none"
+      >
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4">
+            <DialogPanel
+              transition
+              className="w-full max-w-md rounded-xl bg-gray-800 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+            >
+              <Field>
+                <form>
+                  <Label className="text-md font-medium text-white">
+                    Manual Entry
+                  </Label>
+                  <Description className="text-sm/6 text-white/50">
+                    Enter UPC of the item
+                  </Description>
+                  <Input type="text" maxlength="9" pattern="[0-9]*" value={newItem} onChange={handleInputChange}
+                    className={clsx(
+                      "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
+                      "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
+                    )}
+                  />
+                  <div className="mt-4 flex justify-end gap-4">
+                    <Button
+                      className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                      onClick={close}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                      onClick={() => addItem()}
+                    >
+                      Add
+                    </Button>
+                  </div>
+                </form>
+              </Field>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
+
+
     </div>
   );
 };
