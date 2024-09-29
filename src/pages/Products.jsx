@@ -279,7 +279,9 @@ const Products = () => {
                         Add
                       </p>
                       <p
-                        onClick={() => navigate(`/edit?${product.productSKU}`)}
+                        onClick={() =>
+                          navigate(`/edit?sku=${product.productSKU}`)
+                        }
                         className="font-medium text-sky-600 hover:underline cursor-pointer"
                       >
                         Edit

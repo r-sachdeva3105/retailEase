@@ -354,7 +354,7 @@ const Checkout = () => {
                     type="number"
                     name="price"
                     id="price"
-                    class="block w-full rounded-md border-0 py-2 text-md lg:text-lg text-gray-900 font-bold ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:leading-6"
+                    className="block w-full rounded-md border-0 py-2 text-md lg:text-lg text-gray-900 font-bold ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:leading-6"
                     autoComplete="off"
                     value={quantity}
                     disabled
