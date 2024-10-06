@@ -86,9 +86,9 @@ const ItemCard = (props) => {
                 ? product.expiryDate.split(" ")[0]
                 : "")
             }
-            className="group relative p-4 rounded-md shadow overflow-hidden bg-white"
+            className="group relative p-4 rounded-xl shadow overflow-hidden bg-white"
           >
-            <div className="w-full h-60 overflow-hidden rounded-md">
+            <div className="w-full h-60 overflow-hidden rounded-xl">
               <img
                 src={`data:image/png;base64,${product.product.productImage}`}
                 alt={product.product.productName}
@@ -126,7 +126,7 @@ const ItemCard = (props) => {
                       product.product.isExpirable ? product.expiryDate : ""
                     );
                   }}
-                  className="py-2 px-4 bg-sky-600 cursor-pointer rounded-md hover:bg-sky-700"
+                  className="py-2 px-4 bg-sky-600 cursor-pointer rounded-xl hover:bg-sky-700"
                 >
                   <FaPencil className="h-5 text-white" />
                 </button>
@@ -217,13 +217,13 @@ const ItemCard = (props) => {
                   )}
                   <div className="mt-4 flex justify-end gap-4">
                     <Button
-                      className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                      className="inline-flex items-center gap-2 rounded-xl bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                       onClick={close}
                     >
                       Cancel
                     </Button>
                     <Button
-                      className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                      className="inline-flex items-center gap-2 rounded-xl bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                       onClick={updateQuantity}
                     >
                       Save

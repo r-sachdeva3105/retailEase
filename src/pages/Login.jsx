@@ -12,13 +12,18 @@ const Login = () => {
   const [passwordValid, setPasswordValid] = useState();
 
   const handleSubmit = (e) => {
+    const role = e.target.form[1].defaultValue;
     e.target.form[2].value === "" ? setEmailValid(false) : setEmailValid(true);
     e.target.form[3].value === ""
       ? setPasswordValid(false)
       : setPasswordValid(true);
 
     if (emailValid && passwordValid) {
-      navigate("/dashboard");
+      if (role === "associate") {
+        navigate("/checkout");
+      } else {
+        navigate("/dashboard");
+      }
     }
   };
 

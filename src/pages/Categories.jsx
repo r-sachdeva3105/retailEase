@@ -116,7 +116,7 @@ const Categories = () => {
             categories?.map((category) => (
               <div
                 key={category.productCategoryId}
-                className="group relative p-4 rounded-md shadow cursor-pointer hover:bg-gray-200"
+                className="group relative p-4 rounded-xl shadow cursor-pointer hover:bg-gray-200"
               >
                 <Link to={"/inventory?category=" + category.productCategoryId}>
                   <h3 className="text-md font-bold text-gray-700 text-center capitalize">
@@ -160,13 +160,13 @@ const Categories = () => {
                   )}
                   <div className="mt-4 flex justify-end gap-4">
                     <Button
-                      className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                      className="inline-flex items-center gap-2 rounded-xl bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                       onClick={close}
                     >
                       Cancel
                     </Button>
                     <Button
-                      className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                      className="inline-flex items-center gap-2 rounded-xl bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                       onClick={(e) => save(e.target.form[0])}
                     >
                       Save
