@@ -146,8 +146,13 @@ const Dashboard = () => {
                 </div>
               ))}
           </div>
+<<<<<<< HEAD
           <div className="relative p-4 mt-2 max-h-80 md:max-h-60 overflow-auto rounded-xl shadow cursor-pointer hover:bg-gray-200">
             <h1 className="text-md font-bold text-gray-900">Expiring Soon</h1>
+=======
+          <div className="relative p-4 mt-2 max-h-80 md:max-h-60 overflow-scroll rounded-xl shadow cursor-pointer hover:bg-gray-200">
+            <h1 className="text-lg font-bold text-gray-900">Expiring Soon</h1>
+>>>>>>> 9584c70 (dashboard update)
             {isInventoryRendered &&
               inventory?.map((product) => (
                 <div
