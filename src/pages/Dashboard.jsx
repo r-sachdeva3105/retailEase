@@ -138,21 +138,22 @@ const Dashboard = () => {
                 <div key={transaction.transactionId}>
                   <div className="flex justify-between items-center mt-3">
                     <p className="w-3/4 md:w-4/5 flex gap-2 text-sm font-mono">
-                      <span>{transaction.transactionDateAndTime.split(" ")[0]}</span>
-                      <span className="">{transaction.transactionDateAndTime.split(" ")[1].slice(0,-5)}</span>
+                      <span>
+                        {transaction.transactionDateAndTime.split(" ")[0]}
+                      </span>
+                      <span className="">
+                        {transaction.transactionDateAndTime
+                          .split(" ")[1]
+                          .slice(0, -5)}
+                      </span>
                     </p>
                     <p className="font-bold">${transaction.amountAfterTax}</p>
                   </div>
                 </div>
               ))}
           </div>
-<<<<<<< HEAD
           <div className="relative p-4 mt-2 max-h-80 md:max-h-60 overflow-auto rounded-xl shadow cursor-pointer hover:bg-gray-200">
             <h1 className="text-md font-bold text-gray-900">Expiring Soon</h1>
-=======
-          <div className="relative p-4 mt-2 max-h-80 md:max-h-60 overflow-scroll rounded-xl shadow cursor-pointer hover:bg-gray-200">
-            <h1 className="text-lg font-bold text-gray-900">Expiring Soon</h1>
->>>>>>> 9584c70 (dashboard update)
             {isInventoryRendered &&
               inventory?.map((product) => (
                 <div
