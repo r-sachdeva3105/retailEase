@@ -129,7 +129,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-2 xl:gap-8 mt-6">
-          <div className="relative p-4 mt-2 max-h-80 md:max-h-60 overflow-scroll rounded-xl shadow cursor-pointer hover:bg-gray-200">
+          <div className="relative p-4 mt-2 max-h-80 md:max-h-60 overflow-auto rounded-xl shadow cursor-pointer hover:bg-gray-200">
             <h1 className="text-md font-bold text-gray-900">
               Recent Transactions
             </h1>
@@ -146,7 +146,7 @@ const Dashboard = () => {
                 </div>
               ))}
           </div>
-          <div className="relative p-4 mt-2 max-h-80 md:max-h-60 overflow-scroll rounded-xl shadow cursor-pointer hover:bg-gray-200">
+          <div className="relative p-4 mt-2 max-h-80 md:max-h-60 overflow-auto rounded-xl shadow cursor-pointer hover:bg-gray-200">
             <h1 className="text-md font-bold text-gray-900">Expiring Soon</h1>
             {isInventoryRendered &&
               inventory?.map((product) => (
