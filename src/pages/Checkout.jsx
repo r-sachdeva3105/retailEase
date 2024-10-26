@@ -265,8 +265,8 @@ const Checkout = () => {
                     <tr
                       key={index}
                       onClick={() => toggleSelect(index)}
+                      className="cursor-pointer text-gray-600 font-semibold text-base"
                       style={{
-                        cursor: "pointer",
                         backgroundColor:
                           selectedIndex === index ? "#f0f0f0" : "transparent",
                       }}
@@ -490,7 +490,7 @@ const Checkout = () => {
                 <div className="flex justify-between">
                   <dt className="text-sm font-medium text-gray-600">Tax</dt>
                   <dd className="text-sm text-gray-900 font-medium">
-                    HST @1.3% ${tax}
+                    HST @13% ${tax}
                   </dd>
                 </div>
                 <div className="flex justify-between">

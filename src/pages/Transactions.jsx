@@ -40,7 +40,7 @@ const Transactions = () => {
 
       {/* MAIN */}
       <main className="mx-auto max-w-7xl p-4">
-        <div className="relative overflow-x-auto shadow rounded-md mt-4 overflow-scroll max-h-[420px]">
+        <div className="relative overflow-auto shadow rounded-md mt-4 max-h-[420px]">
           <table className="w-full text-sm text-left rtl:text-right text-gray-600">
             <thead className="text-xs text-gray-900 uppercase bg-gray-300">
               <tr>
@@ -96,7 +96,7 @@ const Transactions = () => {
                       ${transaction.amountAfterTax.toFixed(2)}
                     </td>
                     <td className="px-4 py-2">
-                      <MdPrint size={30} />
+                      <MdPrint className="cursor-pointer" size={30} />
                     </td>
                   </tr>
                 ))
